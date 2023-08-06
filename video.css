@@ -151,7 +151,7 @@
     cursor: pointer;
     --parent-height: 15px;
     height: var(--parent-height);
-    width: calc(100% - 10px);
+    width: calc(100% - 15px);
     align-self: center;
     display: flex;
     align-items: center;
@@ -159,6 +159,7 @@
     gap: 2px;
     box-sizing: border-box;
     --child-bar-height: 5px;
+    position: relative;
 }
 
 .video-topic-bar {
@@ -202,4 +203,39 @@
 
 .video-topic-bar:hover {
     scale: 1 2;
+}
+
+.video-progress-topics-nib {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    translate: -50% -50%;
+    display: inline-block;
+    scale: 0;
+    --w: 20px;
+    width: var(--w);
+    height: var(--w);
+    border-radius: 50%;
+    background: var(--timeline-bar);
+    cursor: pointer;
+    transform-origin: center;
+    z-index: 4;
+    transition: scale 0.1s linear;
+}
+
+.video-progress-topics-nib::after {
+    content: ' ';
+    position: absolute;
+    --w: 50%;
+    width: var(--w);
+    height: var(--w);
+    border-radius: 50%;
+    background: var(--timeline-nib-psuedo);
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+}
+
+.video-progress-container-topics:hover .video-progress-topics-nib {
+    scale: 1;
 }

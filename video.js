@@ -33,6 +33,7 @@ const picInPic = document.getElementById('pic-in-pic-btn')
 const videoProgressNormal = document.querySelector('.video-progress-container-normal')
 const videoProgressNormalTimeline = document.querySelector('.video-progress-normal-timeline-bar')
 const videoProgressNormalNib = document.querySelector('.video-progress-normal-nib')
+const videoProgressTopicsNib = document.querySelector('.video-progress-topics-nib')
 const videoProgressSeekBar = document.querySelector('.video-progress-normal-seek-bar')
 const videoProgressContainerTopics = document.querySelector('.video-progress-container-topics')
 
@@ -197,6 +198,7 @@ function updateProgressNormal() {
     const progressPercentage = scalePercentage * 100 || 0
     videoProgressNormalTimeline.style.setProperty('scale', `${scalePercentage} 1`)
     videoProgressNormalNib.style.setProperty('left', `${progressPercentage}%`)
+    videoProgressTopicsNib.style.setProperty('left', `${progressPercentage}%`)
     videoProgressContainerTopics.style.setProperty('--progress', `${progressPercentage}`)
     if (vid.paused) {
         cancelAnimationFrame(updateProgressAnimId)
@@ -210,7 +212,7 @@ videoProgressNormal.addEventListener('click', (event) => {
     const {x, width = 0} = currentTarget.getClientRects()[0]
     const clickPercentage = ((mouseX - x) / width) * 100
     vid.currentTime = (clickPercentage * vid.duration) / 100
-    updateProgressAnimId = requestAnimationFrame(updateProgressNormal)
+    // updateProgressAnimId = requestAnimationFrame(updateProgressNormal)
 
 })
 
@@ -235,17 +237,8 @@ videoProgressNormal.addEventListener('mouseleave', () => {
     })
 })
 
-window.addEventListener('resize', () => {
-    handleVideoControlsWidth()
-})
 
-function handleVideoControlsWidth() {
-    const vidDim = vid.getClientRects();
-    videoControls.style.setProperty('width', `${vidDim[0].width}px`)
-}
-
-
-
+// Chapters
 function buildChaptersTimeline() {
     VIDEO_TOPICS.forEach(topic => {
         const topicBar = document.createElement('div')
@@ -268,4 +261,20 @@ function buildChaptersTimeline() {
         topicBar.style.setProperty('--offset-progress', `${offsetWidthPercentage}`)
         videoProgressContainerTopics.appendChild(topicBar)
     })
+}
+
+videoProgressContainerTopics.addEventListener('click', (event) => {
+    const {currentTarget, x: mouseX = 0} = event
+    const {x, width = 0} = currentTarget.getClientRects()[0]
+    const clickPercentage = ((mouseX - x) / width) * 100
+    vid.currentTime = (clickPercentage * vid.duration) / 100
+})
+
+window.addEventListener('resize', () => {
+    handleVideoControlsWidth()
+})
+
+function handleVideoControlsWidth() {
+    const vidDim = vid.getClientRects();
+    videoControls.style.setProperty('width', `${vidDim[0].width}px`)
 }
