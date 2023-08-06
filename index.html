@@ -3,10 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
-<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
-<!--    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">-->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+    <!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+    <!--    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">-->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Video Player</title>
   </head>
@@ -15,41 +18,120 @@
     <main>
       <section class="video-section">
         <div class="video-container">
-        <div class="video-wrapper">
-          <video src="./assets/input.mp4" id="video"></video>
-          <div class="video-controls" data-video-state="pause">
-            <div class="video-progress-container-normal">
-              <div class="video-progress-normal-bck"></div>
-              <div class="video-progress-normal-timeline-bar">
+          <div class="video-wrapper">
+            <video src="./assets/input.mp4" id="video" muted></video>
+            <div class="video-controls" data-video-state="pause">
+              <div class="video-progress-container-normal">
+                <div class="video-progress-normal-bck"></div>
+                <div class="video-progress-normal-timeline-bar"></div>
+                <div class="video-progress-normal-seek-bar"></div>
+                <span class="video-progress-normal-nib"></span>
+                <div class="video-progress-normal-buffered"></div>
               </div>
-              <div class="video-progress-normal-seek-bar"></div>
-              <span class="video-progress-normal-nib"></span>
-              <div class="video-progress-normal-buffered"></div>
-            </div>
-            <div class="video-progress-container-topics">
+              <div class="video-progress-container-topics">
                 <span class="video-progress-topics-nib"></span>
-            </div>
-            <div class="video-control-button-wrapper">
-              <button class="btn btn-video-controls" id="play-pause-btn">
-                <ion-icon name="play"></ion-icon>
-              </button>
-              <button class="btn btn-video-controls" id="seek-bwd-btn"><ion-icon name="refresh"></ion-icon></button>
-              <button class="btn btn-video-controls" id="seek-fwd-btn"><ion-icon name="refresh"></ion-icon></button>
-              <button class="btn btn-video-controls" id="vol-ctrl-btn"><ion-icon name="volume-high"></ion-icon></button>
-              <div class="video-time">
-                <span class="video-current-time" id="vid-cur-time">00:00</span>/<span class="video-total-time" id="vid-total-time">00:00</span>
               </div>
-              <button class="btn btn-video-controls" id="captions-btn"><ion-icon name="logo-closed-captioning"></ion-icon></button>
-              <button class="btn btn-video-controls" id="pic-in-pic-btn"><ion-icon name="tv"></ion-icon></button>
-              <button class="btn btn-video-controls" id="vid-full-screen-btn"><ion-icon name="scan-outline"></ion-icon></button>
-              <button class="btn btn-video-controls" id="vid-settings-btn"><ion-icon name="settings"></ion-icon></button>
+              <div class="video-control-button-wrapper">
+                <button class="btn btn-video-controls" id="play-pause-btn">
+                  <ion-icon name="play"></ion-icon>
+                </button>
+                <button class="btn btn-video-controls" id="seek-bwd-btn">
+                  <ion-icon name="refresh"></ion-icon>
+                </button>
+                <button class="btn btn-video-controls" id="seek-fwd-btn">
+                  <ion-icon name="refresh"></ion-icon>
+                </button>
+                <button class="btn btn-video-controls" id="vol-ctrl-btn">
+                  <ion-icon name="volume-high"></ion-icon>
+                </button>
+                <div class="video-time">
+                  <span class="video-current-time" id="vid-cur-time">00:00</span
+                  >/<span class="video-total-time" id="vid-total-time"
+                    >00:00</span
+                  >
+                </div>
+                <button class="btn btn-video-controls" id="captions-btn">
+                  <ion-icon name="logo-closed-captioning"></ion-icon>
+                </button>
+                <button class="btn btn-video-controls" id="pic-in-pic-btn">
+                  <ion-icon name="tv"></ion-icon>
+                </button>
+                <button class="btn btn-video-controls" id="vid-full-screen-btn">
+                  <ion-icon name="scan-outline"></ion-icon>
+                </button>
+                <button class="btn btn-video-controls" id="vid-settings-btn">
+                  <ion-icon name="settings"></ion-icon>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        </div>
       </section>
       <section class="comments-container"></section>
-      <section class="video-stats-wrapper"></section>
+      <section class="video-stats-wrapper">
+        <div class="video-participants">
+          <h5>Participants <span>(3)</span></h5>
+          <p>Naveen Pantra, Sathwik A, Vishnu Shankaran</p>
+          <div class="participants-timeline-container">
+            <div class="participants-info">
+              <div class="participant-info">
+                <h6>Naveen Pantra</h6>
+                <p>zozobe@gmail.com</p>
+                <div class="participant-timeline">
+                  <div class="participant-local-timeline"></div>
+                </div>
+              </div>
+              <div class="participant-info">
+                <h6>Sathwik A</h6>
+                <p>+91 89433 23452</p>
+                <div class="participant-timeline">
+                  <div class="participant-local-timeline"></div>
+                  <div
+                    class="participant-time-line-segment"
+                    style="--l: 0%; --w: 70%"
+                  ></div>
+                </div>
+              </div>
+              <div class="participant-info">
+                <h6>Vishnu Shankaran</h6>
+                <p>+1 (233) - 23323</p>
+                <div class="participant-timeline">
+                  <div class="participant-local-timeline"></div>
+                  <div
+                    class="participant-time-line-segment"
+                    style="--l: 5%; --w: 30%"
+                  ></div>
+
+                  <div
+                    class="participant-time-line-segment"
+                    style="--l: 60%; --w: 40%"
+                  ></div>
+                </div>
+              </div>
+
+              <div class="participant-info video-topics-timeline">
+                <h6>Topics</h6>
+                <div class="participant-timeline topics-timeline">
+                  <div class="participant-local-timeline"></div>
+                </div>
+              </div>
+              <div class="participant-timeline-progress"></div>
+              <div class="participant-timeline-seek-progress">
+                <figure class="participants-timeline-fig">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqzXo7qP8p2uF8NhPsCp514G-XPkfNMBeN5gVDPLkxRA&s"
+                    alt=""
+                    class="participants-timeline-img"
+                  />
+                  <figcaption class="participants-timeline-fig-caption">
+                    00:00
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <script type="module" src="/main.js"></script>
   </body>

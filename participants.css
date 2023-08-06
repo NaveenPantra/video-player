@@ -1,0 +1,112 @@
+h5 {
+    font-size: 1.6rem;
+}
+
+h6 {
+    font-size: 1.4rem;
+}
+
+.participants-timeline-container {
+    /*border: 3px solid;*/
+    /*padding: 1.2rem;*/
+    margin: 2.5rem 0 2rem;
+    position: relative;
+    --progress: 0;
+    --seek-progress: 0;
+}
+
+.participant-info:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.participants-timeline {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: relative;
+}
+
+.participant-timeline {
+    height: 8px;
+    border-radius: 5px;
+    background-color: grey;
+    position: relative;
+    /*overflow: hidden;*/
+    margin: 2rem 0;
+}
+
+.participant-info:first-child .participant-timeline{
+    background-color: black;
+}
+
+.participant-timeline-progress, .participant-timeline-seek-progress {
+    position: absolute;
+    left: calc(var(--progress, 0) * 1%);
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.22);
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.participants-timeline-container .participant-timeline-seek-progress {
+    display: none;
+}
+
+.participants-timeline-container:hover .participant-timeline-seek-progress {
+    left: calc(var(--seek-progress, 0) * 1%);
+    background-color: rgba(0, 0, 0, 0.06);
+    display: inline-block;
+}
+
+.participant-time-line-segment {
+    position: absolute;
+    height: 100%;
+    border-radius: inherit;
+    left: var(--l);
+    width: var(--w);
+    background-color: black;
+}
+
+.participant-local-timeline {
+    height: 300%;
+    width: 2px;
+    border-radius: 2px;
+    background: black;
+    position: absolute;
+    left: calc(var(--progress, 0) * 1%);
+    top: 50%;
+    translate: 0% -50%;
+}
+
+.participants-info {
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.participants-timeline-fig {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    translate: -50% -100%;
+    text-align: center;
+    pointer-events: none;
+}
+
+.topics-timeline {
+    display: flex;
+    gap: 2px;
+    align-self: center;
+    justify-content: flex-start;
+}
+
+.topic-time-line-segment {
+    height: 100%;
+    border-radius: inherit;
+    background-color: black;
+    cursor: pointer;
+}
+.topic-time-line-segment:hover {
+    scale: 1 1.5;
+}
