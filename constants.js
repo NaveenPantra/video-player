@@ -33,6 +33,18 @@ const VIDEO_TOPICS = [
     },
 ]
 
+const POSTERS = {}
+
+let next = 0;
+let counter = 5;
+new Array(21).fill(0).forEach(_ => {
+    POSTERS[next.toString()] = {
+        poster: `./assets/poster-${next}.jpg`
+    }
+    next += counter
+})
+
 export {
-    VIDEO_TOPICS
+    VIDEO_TOPICS,
+    POSTERS,
 }

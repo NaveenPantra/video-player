@@ -2,7 +2,7 @@ import Hls from "hls.js";
 import "./video.css";
 import "./participants.css";
 import { getNormalizedValue, getTimeInMinAndSec } from "./utils.js";
-import { VIDEO_TOPICS } from "./constants.js";
+import {POSTERS, VIDEO_TOPICS} from "./constants.js";
 
 // TODO: change here
 let VIDEO_M3U8 = "./assets/output.m3u8";
@@ -63,6 +63,7 @@ const videoTopicsTimeline = document.querySelector(".video-topics-timeline");
 const topicsTimeline = document.querySelector(".topics-timeline");
 const textAreaComment = document.querySelector(".textarea-comment");
 const submitCommentButton = document.querySelector(".submit-comment-btn");
+const participantTimelineImg = document.querySelector('.participants-timeline-img')
 
 if (Hls.isSupported()) {
   // console.log('Hls is supported!')
@@ -362,9 +363,13 @@ function handleMouseMoveOnParticipantsTimelineContainer(event) {
       "--seek-progress",
       hoverPercentage,
     );
+
     const time = (hoverPercentage * vid.duration) / 100;
+    let nearestFiveMultiple = hoverPercentage -  (hoverPercentage % 5)
+    let poster = POSTERS[nearestFiveMultiple]
     window.startViewTransition(() => {
       participantsTimelineFigCaption.textContent = getTimeInMinAndSec(time);
+      if (poster) participantTimelineImg.src = poster?.poster ?? ''
     });
   });
 }

@@ -214,7 +214,7 @@
 }
 
 .video-topic-bar:hover {
-  scale: 1 2;
+  height: calc(var(--child-bar-height) * 2);
 }
 
 .video-progress-topics-nib {
@@ -233,6 +233,9 @@
   transform-origin: center;
   z-index: 4;
   transition: scale 0.1s linear;
+
+  /*  TODO: remove this */
+  pointer-events: none;
 }
 
 .video-progress-topics-nib::after {
@@ -255,4 +258,11 @@
 
 .video-participants {
   padding: 3rem;
+}
+
+.participants-timeline-img {
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  background: black;
 }

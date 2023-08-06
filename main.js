@@ -3,7 +3,7 @@ import './video.js'
 import './comments.js'
 
 if (!window.startViewTransition) {
-    console.log('no start')
+    console.log('polyfill window.startViewTransition')
     window.startViewTransition = (cb = () => {}) => {
         cb()
     }
