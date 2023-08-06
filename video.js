@@ -1,6 +1,7 @@
 import Hls from "hls.js";
 import './video.css'
 import {getNormalizedValue, getTimeInMinAndSec} from "./utils.js";
+import { VIDEO_TOPICS } from "./constants.js";
 
 // TODO: change here
 let VIDEO_M3U8= './assets/output.m3u8'
@@ -33,6 +34,7 @@ const videoProgressNormal = document.querySelector('.video-progress-container-no
 const videoProgressNormalTimeline = document.querySelector('.video-progress-normal-timeline-bar')
 const videoProgressNormalNib = document.querySelector('.video-progress-normal-nib')
 const videoProgressSeekBar = document.querySelector('.video-progress-normal-seek-bar')
+const videoProgressContainerTopics = document.querySelector('.video-progress-container-topics')
 
 if (Hls.isSupported()) {
     // console.log('Hls is supported!')
@@ -51,6 +53,7 @@ vid.addEventListener('loadedmetadata', () => {
     updatePlayPauseIcon()
     updatePicInPicIcon()
     updateFullscreenIcon()
+    buildChaptersTimeline()
 })
 
 vid.addEventListener('timeupdate', () => {
@@ -96,6 +99,9 @@ function updatePlayPauseIcon() {
     let icon =  PAUSE_ICON
     if (vid.paused) {
         icon = PLAY_ICON
+        videoControls.setAttribute('data-video-state', 'pause')
+    } else {
+        videoControls.setAttribute('data-video-state', 'play')
     }
     window.startViewTransition(() => {
         playPauseButton.innerHTML = icon
@@ -187,10 +193,11 @@ function updateProgressNormal() {
         min: 0,
         max: vid.duration,
         val: vid.currentTime,
-    })
-    const progressPercentage = scalePercentage * 100
+    }) || 0
+    const progressPercentage = scalePercentage * 100 || 0
     videoProgressNormalTimeline.style.setProperty('scale', `${scalePercentage} 1`)
     videoProgressNormalNib.style.setProperty('left', `${progressPercentage}%`)
+    videoProgressContainerTopics.style.setProperty('--progress', `${progressPercentage}`)
     if (vid.paused) {
         cancelAnimationFrame(updateProgressAnimId)
         return
@@ -235,4 +242,30 @@ window.addEventListener('resize', () => {
 function handleVideoControlsWidth() {
     const vidDim = vid.getClientRects();
     videoControls.style.setProperty('width', `${vidDim[0].width}px`)
+}
+
+
+
+function buildChaptersTimeline() {
+    VIDEO_TOPICS.forEach(topic => {
+        const topicBar = document.createElement('div')
+        topicBar.classList.add('video-topic-bar')
+        topicBar.innerHTML = `
+            <div class="video-topic-buffered-bar"></div>
+            <div class="video-topic-seek-bar"></div>
+            <div class="video-topic-progress-bar"></div>
+        `
+        const flex = getNormalizedValue({
+            min: 0,
+            max: vid.duration,
+            val: topic.to - topic.from
+        }) || 0
+        const offsetWidthPercentage = ((topic.from) / vid.duration) * 100
+        const shareOfTotalWidth = flex * 100 || 0
+        topicBar.setAttribute('title', topic.title)
+        topicBar.style.setProperty('flex', flex);
+        topicBar.style.setProperty('--share-of-total-width', `${shareOfTotalWidth}`);
+        topicBar.style.setProperty('--offset-progress', `${offsetWidthPercentage}`)
+        videoProgressContainerTopics.appendChild(topicBar)
+    })
 }

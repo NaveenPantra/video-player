@@ -4,6 +4,10 @@
     --semi-bold-font: 500;
     --regular-font: 400;
     --light-font: 300;
+    --timeline-bck: #333;
+    --timeline-bar: #aaa;
+    --timeline-seek: #bbb;
+    --timeline-nib-psuedo: #999;
 }
 
 html {
