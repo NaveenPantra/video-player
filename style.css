@@ -73,10 +73,18 @@ video {
     border-bottom: 1px solid;
 }
 
+.video-section-theater {
+    grid-column: 1 / -1;
+}
+
 .comments-container {
     grid-row: 1 / -1;
     grid-column: 2 / span 1;
     border-left: 1px solid;
+}
+
+.comments-container-theater {
+    grid-row: 2 / -1;
 }
 
 .video-stats-wrapper {
@@ -105,4 +113,11 @@ figcaption {
     margin: 0;
     padding: 0;
     font-size: 1rem;
+}
+
+kbd {
+    color: red;
+    background: yellow;
+    padding: 3px;
+    border: 1px solid red;
 }

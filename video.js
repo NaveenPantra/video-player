@@ -18,6 +18,8 @@ const EXIT_PIC_IN_PIC = '<ion-icon name="tablet-landscape"></ion-icon>';
 const FULL_SCREEN_ICON = '<ion-icon name="scan-outline"></ion-icon>';
 const EXIT_FULL_SCREEN_ICON = '<ion-icon name="exit"></ion-icon>';
 
+const videoSection = document.querySelector(".video-section");
+const commentsSection = document.querySelector(".comments-container");
 const videoWrapper = document.querySelector(".video-wrapper");
 const vid = document.getElementById("video");
 const videoControls = document.querySelector(".video-controls");
@@ -31,6 +33,7 @@ const captions = document.getElementById("captions-btn");
 const fullScreen = document.getElementById("vid-full-screen-btn");
 const settings = document.getElementById("vid-settings-btn");
 const picInPic = document.getElementById("pic-in-pic-btn");
+const theaterMode = document.getElementById("theater-mode");
 const videoProgressNormal = document.querySelector(
   ".video-progress-container-normal",
 );
@@ -58,6 +61,8 @@ const participantsTimelineFigCaption = document.querySelector(
 );
 const videoTopicsTimeline = document.querySelector(".video-topics-timeline");
 const topicsTimeline = document.querySelector(".topics-timeline");
+const textAreaComment = document.querySelector(".textarea-comment");
+const submitCommentButton = document.querySelector(".submit-comment-btn");
 
 if (Hls.isSupported()) {
   // console.log('Hls is supported!')
@@ -100,6 +105,7 @@ function updateCurrentTime() {
 vid.addEventListener("play", () => {
   updatePlayPauseIcon();
   updateProgressAnimId = requestAnimationFrame(updateProgressNormal);
+  submitCommentButton.value = `Comment`;
 });
 vid.addEventListener("pause", () => {
   updatePlayPauseIcon();
@@ -107,10 +113,10 @@ vid.addEventListener("pause", () => {
 });
 
 playPauseButton.addEventListener("click", () => {
-  updatePlayPauseIconState();
+  togglePlayPause();
 });
 
-function updatePlayPauseIconState() {
+function togglePlayPause() {
   if (vid.paused) {
     vid.play();
   } else {
@@ -158,24 +164,36 @@ function updateFullscreenIcon() {
 }
 
 seekBackwards.addEventListener("click", () => {
-  vid.currentTime = Math.max(0, vid.currentTime - 10);
+  handleSeekBackwards();
 });
 
+function handleSeekBackwards() {
+  vid.currentTime = Math.max(0, vid.currentTime - 10);
+}
+
 seekForwards.addEventListener("click", () => {
-  vid.currentTime = Math.min(vid.duration, vid.currentTime + 10);
+  handleSeekForwards();
 });
+
+function handleSeekForwards() {
+  vid.currentTime = Math.min(vid.duration, vid.currentTime + 10);
+}
 
 vid.addEventListener("volumechange", () => {
   toggleMuteIcon();
 });
 
 volCtrl.addEventListener("click", () => {
+  handleToggleMute();
+});
+
+function handleToggleMute() {
   if (vid.volume === 0) {
     vid.volume = 1;
   } else {
     vid.volume = 0;
   }
-});
+}
 
 function toggleMuteIcon() {
   let icon = FULL_VOL_ICON;
@@ -188,6 +206,10 @@ function toggleMuteIcon() {
 }
 
 picInPic.addEventListener("click", () => {
+  handleTogglePicInPic();
+});
+
+function handleTogglePicInPic() {
   if (!document.pictureInPictureElement) {
     vid.requestPictureInPicture().then(() => {
       updatePicInPicIcon();
@@ -197,7 +219,7 @@ picInPic.addEventListener("click", () => {
       updatePicInPicIcon();
     });
   }
-});
+}
 
 function updatePicInPicIcon() {
   let icon = PIC_IN_PIC;
@@ -354,18 +376,22 @@ participantsTimelineContainer.addEventListener("click", (event) => {
   vid.currentTime = (clickPercentage * vid.duration) / 100;
 });
 
-videoTopicsTimeline.addEventListener("click", (event) => {
-  const startTime = event.target.getAttribute('data-topic-from') || -1
-  if (startTime === -1) return
-  event.stopPropagation()
-  vid.currentTime = startTime
-}, { capture: true });
+videoTopicsTimeline.addEventListener(
+  "click",
+  (event) => {
+    const startTime = event.target.getAttribute("data-topic-from") || -1;
+    if (startTime === -1) return;
+    event.stopPropagation();
+    vid.currentTime = startTime;
+  },
+  { capture: true },
+);
 
 function buildVideoTopicsTimeline() {
   VIDEO_TOPICS.forEach((topic) => {
     const topicBar = document.createElement("div");
     topicBar.classList.add("topic-time-line-segment");
-    topicBar.setAttribute('data-topic-from', `${topic.from}`)
+    topicBar.setAttribute("data-topic-from", `${topic.from}`);
     const flex =
       getNormalizedValue({
         min: 0,
@@ -376,6 +402,67 @@ function buildVideoTopicsTimeline() {
     topicsTimeline.appendChild(topicBar);
   });
 }
+
+textAreaComment.addEventListener("focus", () => {
+  vid.pause();
+  const time = getTimeInMinAndSec(vid.currentTime);
+  submitCommentButton.value = `Comment @ ${time}`;
+});
+
+theaterMode.addEventListener("click", handleToggleTheaterMode);
+
+function handleToggleTheaterMode() {
+  let icon = '<ion-icon name="browsers"></ion-icon>';
+  if (videoSection.classList.contains("video-section-theater")) {
+    icon = '<ion-icon name="phone-landscape"></ion-icon>';
+  }
+  window.startViewTransition(() => {
+    videoSection.classList.toggle("video-section-theater");
+    commentsSection.classList.toggle("comments-container-theater");
+    theaterMode.innerHTML = icon;
+  });
+  handleVideoControlsWidth();
+}
+
+document.addEventListener("keyup", (event) => {
+  switch (event.key.toLowerCase()) {
+    case "n": {
+      textAreaComment.focus();
+      return;
+    }
+    case "k": {
+      togglePlayPause();
+      return;
+    }
+    case "f": {
+      handleFullScreen();
+      return;
+    }
+    case "m": {
+      handleToggleMute();
+      return;
+    }
+    case "i": {
+      handleTogglePicInPic();
+      return;
+    }
+    case "t": {
+      handleToggleTheaterMode();
+      return;
+    }
+    case "arrowleft": {
+      handleSeekBackwards();
+      return;
+    }
+    case "arrowright": {
+      handleSeekForwards();
+      return;
+    }
+    default: {
+      console.log(event.key);
+    }
+  }
+});
 
 window.addEventListener("resize", () => {
   handleVideoControlsWidth();

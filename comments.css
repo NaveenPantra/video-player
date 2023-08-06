@@ -1,0 +1,123 @@
+.comments-container {
+  padding: 1rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-actions {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-self: center;
+  justify-content: flex-end;
+  resize: none;
+}
+
+input[type="reset"] {
+  margin-left: auto;
+}
+
+.comments-tree-container {
+  margin-top: 3rem;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comments-heading-4 {
+  margin-bottom: 1.5rem;
+}
+
+.comment {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  grid-template-rows: max-content 1fr;
+  grid-column-gap: 1rem;
+  position: relative;
+}
+
+.commenter-avatar {
+  --w: 24px;
+  width: var(--w);
+  height: var(--w);
+  border-radius: 50%;
+  background: black;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-text-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+}
+
+.comment-actions {
+  grid-column: 2 / -1;
+  display: flex;
+  align-items: center;
+}
+
+.comment-actions button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+.comment-actions button:hover {
+  background: black;
+  color: white;
+}
+
+.comment-delete {
+  margin-left: auto;
+}
+
+.comment-replies {
+  margin-top: 1rem;
+  grid-column: 2 / -1;
+}
+
+.comment:has(> .comment-replies) .comment-text-actions:after {
+  content: " ";
+  position: absolute;
+  width: calc(24px + 4px);
+  height: calc(100% + 4px);
+  pointer-events: none;
+  background: transparent;
+  border: 2px solid;
+  border-radius: 4px;
+  translate: -23px 18px;
+  border-top: none;
+  border-right: none;
+}
+
+.comment:not(:has(> .comment-replies)) .comment-text-actions:after {
+  content: " ";
+  position: absolute;
+  width: calc(24px + 4px);
+  height: calc(100% + 4px);
+  pointer-events: none;
+  background: transparent;
+  border-radius: 0;
+    translate: -23px 18px;
+  border-top: none;
+  border-right: none;
+  border: none;
+  border-left: 2px solid;
+  top: 0;
+  left: 0;
+}
+
+.comment:last-child > .comment-text-actions:after {
+  display: none;
+}
