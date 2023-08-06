@@ -2,7 +2,7 @@ import Hls from "hls.js";
 import "./video.css";
 import "./participants.css";
 import { getNormalizedValue, getTimeInMinAndSec } from "./utils.js";
-import {POSTERS, VIDEO_TOPICS} from "./constants.js";
+import { POSTERS, VIDEO_TOPICS } from "./constants.js";
 
 // TODO: change here
 let VIDEO_M3U8 = "./assets/output.m3u8";
@@ -56,19 +56,34 @@ const videoParticipants = document.querySelector(".video-participants");
 const participantsTimelineContainer = document.querySelector(
   ".participants-timeline-container",
 );
-const participantsTimelineFigCaption = document.querySelector(
-  ".participants-timeline-fig-caption",
+const participantsTimelineSeekTime = document.querySelector(
+  ".participant-timeline-seek-time",
+);
+const participantsTimelineSeekTitle = document.querySelector(
+  ".participant-timeline-seek-title",
 );
 const videoTopicsTimeline = document.querySelector(".video-topics-timeline");
 const topicsTimeline = document.querySelector(".topics-timeline");
 const textAreaComment = document.querySelector(".textarea-comment");
 const submitCommentButton = document.querySelector(".submit-comment-btn");
-const participantTimelineImg = document.querySelector('.participants-timeline-img')
-const videoProgressNormalTimelineImage = document.querySelector('.video-progress-normal-img')
-const videoProgressNormalFigTime = document.querySelector('.video-progress-normal-fig-caption')
-const videoProgressTopicsSeekImage = document.querySelector('.video-progress-topics-img')
-const videoProgressTopicsSeekTime = document.querySelector('.video-progress-topic-seek-time')
-const videoProgressTopicsSeekTitle = document.querySelector('.video-progress-topic-seek-title')
+const participantTimelineImg = document.querySelector(
+  ".participants-timeline-img",
+);
+const videoProgressNormalTimelineImage = document.querySelector(
+  ".video-progress-normal-img",
+);
+const videoProgressNormalFigTime = document.querySelector(
+  ".video-progress-normal-fig-caption",
+);
+const videoProgressTopicsSeekImage = document.querySelector(
+  ".video-progress-topics-img",
+);
+const videoProgressTopicsSeekTime = document.querySelector(
+  ".video-progress-topic-seek-time",
+);
+const videoProgressTopicsSeekTitle = document.querySelector(
+  ".video-progress-topic-seek-title",
+);
 
 if (Hls.isSupported()) {
   // console.log('Hls is supported!')
@@ -288,21 +303,20 @@ function handleMouseMoveOnVideoProgressNormal(event) {
     if (hoverPercentage < 0) hoverPercentage = 0;
     if (hoverPercentage > 1) hoverPercentage = 1;
     videoProgressSeekBar.style.setProperty("scale", `${hoverPercentage} 1`);
-    hoverPercentage = hoverPercentage * 100
-    videoProgressNormal.style.setProperty('--seek-progress', hoverPercentage)
-    let nearestFiveMultiple = hoverPercentage -  (hoverPercentage % 5)
-    let poster = POSTERS[nearestFiveMultiple]
-    if (poster) videoProgressNormalTimelineImage.src = poster?.poster ?? ''
+    hoverPercentage = hoverPercentage * 100;
+    videoProgressNormal.style.setProperty("--seek-progress", hoverPercentage);
+    let nearestFiveMultiple = hoverPercentage - (hoverPercentage % 5);
+    let poster = POSTERS[nearestFiveMultiple];
+    if (poster) videoProgressNormalTimelineImage.src = poster?.poster ?? "";
     const time = (hoverPercentage * vid.duration) / 100;
-    videoProgressNormalFigTime.textContent = getTimeInMinAndSec(time)
-
+    videoProgressNormalFigTime.textContent = getTimeInMinAndSec(time);
   });
 }
 
 videoProgressNormal.addEventListener("mouseleave", () => {
   requestAnimationFrame(() => {
     videoProgressSeekBar.style.setProperty("scale", `0 1`);
-    videoProgressNormal.style.setProperty('--seek-progress', 0)
+    videoProgressNormal.style.setProperty("--seek-progress", 0);
   });
 });
 
@@ -342,19 +356,19 @@ videoProgressContainerTopics.addEventListener("mousemove", (event) => {
 function handleMouseMoveOnVideoTopicsContainer(event) {
   const { currentTarget, x: mouseX = 0 } = event;
   const { x, width = 0 } = currentTarget.getClientRects()[0];
-  const topicTitle = event.target.getAttribute('title')
+  const topicTitle = event.target.getAttribute("title");
   requestAnimationFrame(() => {
     let hoverPercentage = ((mouseX - x) / width) * 100;
     videoProgressContainerTopics.style.setProperty(
       "--seek-progress",
       hoverPercentage,
     );
-    let nearestFiveMultiple = hoverPercentage -  (hoverPercentage % 5)
-    let poster = POSTERS[nearestFiveMultiple]
-    if (poster) videoProgressTopicsSeekImage.src = poster?.poster ?? ''
+    let nearestFiveMultiple = hoverPercentage - (hoverPercentage % 5);
+    let poster = POSTERS[nearestFiveMultiple];
+    if (poster) videoProgressTopicsSeekImage.src = poster?.poster ?? "";
     const time = (hoverPercentage * vid.duration) / 100;
-    videoProgressTopicsSeekTime.textContent = getTimeInMinAndSec(time)
-    videoProgressTopicsSeekTitle.textContent = topicTitle ?? ''
+    videoProgressTopicsSeekTime.textContent = getTimeInMinAndSec(time);
+    videoProgressTopicsSeekTitle.textContent = topicTitle ?? "";
   });
 }
 
@@ -378,6 +392,7 @@ participantsTimelineContainer.addEventListener("mousemove", (event) => {
 function handleMouseMoveOnParticipantsTimelineContainer(event) {
   const { currentTarget, x: mouseX = 0 } = event;
   const { x, width = 0 } = currentTarget.getClientRects()[0];
+  const topicTitle = event.target.getAttribute("title");
   requestAnimationFrame(() => {
     let hoverPercentage = ((mouseX - x) / width) * 100;
     participantsTimelineContainer.style.setProperty(
@@ -386,11 +401,12 @@ function handleMouseMoveOnParticipantsTimelineContainer(event) {
     );
 
     const time = (hoverPercentage * vid.duration) / 100;
-    let nearestFiveMultiple = hoverPercentage -  (hoverPercentage % 5)
-    let poster = POSTERS[nearestFiveMultiple]
+    let nearestFiveMultiple = hoverPercentage - (hoverPercentage % 5);
+    let poster = POSTERS[nearestFiveMultiple];
     window.startViewTransition(() => {
-      participantsTimelineFigCaption.textContent = getTimeInMinAndSec(time);
-      if (poster) participantTimelineImg.src = poster?.poster ?? ''
+      participantsTimelineSeekTime.textContent = getTimeInMinAndSec(time);
+      if (poster) participantTimelineImg.src = poster?.poster ?? "";
+      participantsTimelineSeekTitle.textContent = topicTitle || "";
     });
   });
 }
@@ -418,6 +434,7 @@ function buildVideoTopicsTimeline() {
     const topicBar = document.createElement("div");
     topicBar.classList.add("topic-time-line-segment");
     topicBar.setAttribute("data-topic-from", `${topic.from}`);
+    topicBar.setAttribute("title", `${topic.title}`);
     const flex =
       getNormalizedValue({
         min: 0,
