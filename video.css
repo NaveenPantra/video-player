@@ -74,7 +74,7 @@
 
 .video-progress-normal-seek-bar {
   position: absolute;
-  left: 0;
+  left: var(--seek-progress);
   top: 50%;
   translate: 0 -50%;
   width: 100%;
@@ -83,6 +83,31 @@
   transform-origin: left;
   background: var(--timeline-seek);
   z-index: 2;
+}
+
+.video-progress-normal-fig {
+  position: absolute;
+  left: calc(var(--seek-progress) * 1%);
+  top: 0;
+  translate: -50% -110%;
+  display: none;
+
+  /*pointer-events: none;*/
+}
+
+.video-progress-container-normal:hover .video-progress-normal-fig {
+  display: block;
+}
+
+/*.video-progress-normal-img {*/
+/*  width: 250px;*/
+/*  height: auto;*/
+/*  object-fit: contain;*/
+/*  background: black;*/
+/*}*/
+
+.video-progress-normal-fig-caption {
+  text-align: center;
 }
 
 .video-progress-normal-timeline-bar {
@@ -214,7 +239,7 @@
 }
 
 .video-topic-bar:hover {
-  height: calc(var(--child-bar-height) * 2);
+  height: calc(var(--child-bar-height) * 3);
 }
 
 .video-progress-topics-nib {
@@ -255,12 +280,37 @@
   scale: 1;
 }
 
+.video-progress-topics-fig {
+  position: absolute;
+  left: calc(var(--seek-progress) * 1%);
+  top: 0;
+  translate: -50% -100%;
+  display: none;
+  /*display: block;*/
+
+  pointer-events: none;
+}
+
+/* TODO: PROBLEM */
+/*.video-progress-container-topics:has(> .video-topic-bar:hover) .video-progress-topics-fig {*/
+.video-progress-container-topics:hover .video-progress-topics-fig {
+  display: block;
+}
+
+.video-progress-topic-fig-caption {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
 .video-participants {
   padding: 3rem;
 }
 
-.participants-timeline-img {
+.participants-timeline-img,
+.video-progress-topics-img,
+.video-progress-normal-img {
   max-width: 250px;
   height: auto;
   object-fit: contain;

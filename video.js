@@ -64,6 +64,11 @@ const topicsTimeline = document.querySelector(".topics-timeline");
 const textAreaComment = document.querySelector(".textarea-comment");
 const submitCommentButton = document.querySelector(".submit-comment-btn");
 const participantTimelineImg = document.querySelector('.participants-timeline-img')
+const videoProgressNormalTimelineImage = document.querySelector('.video-progress-normal-img')
+const videoProgressNormalFigTime = document.querySelector('.video-progress-normal-fig-caption')
+const videoProgressTopicsSeekImage = document.querySelector('.video-progress-topics-img')
+const videoProgressTopicsSeekTime = document.querySelector('.video-progress-topic-seek-time')
+const videoProgressTopicsSeekTitle = document.querySelector('.video-progress-topic-seek-title')
 
 if (Hls.isSupported()) {
   // console.log('Hls is supported!')
@@ -283,12 +288,21 @@ function handleMouseMoveOnVideoProgressNormal(event) {
     if (hoverPercentage < 0) hoverPercentage = 0;
     if (hoverPercentage > 1) hoverPercentage = 1;
     videoProgressSeekBar.style.setProperty("scale", `${hoverPercentage} 1`);
+    hoverPercentage = hoverPercentage * 100
+    videoProgressNormal.style.setProperty('--seek-progress', hoverPercentage)
+    let nearestFiveMultiple = hoverPercentage -  (hoverPercentage % 5)
+    let poster = POSTERS[nearestFiveMultiple]
+    if (poster) videoProgressNormalTimelineImage.src = poster?.poster ?? ''
+    const time = (hoverPercentage * vid.duration) / 100;
+    videoProgressNormalFigTime.textContent = getTimeInMinAndSec(time)
+
   });
 }
 
 videoProgressNormal.addEventListener("mouseleave", () => {
   requestAnimationFrame(() => {
     videoProgressSeekBar.style.setProperty("scale", `0 1`);
+    videoProgressNormal.style.setProperty('--seek-progress', 0)
   });
 });
 
@@ -328,12 +342,19 @@ videoProgressContainerTopics.addEventListener("mousemove", (event) => {
 function handleMouseMoveOnVideoTopicsContainer(event) {
   const { currentTarget, x: mouseX = 0 } = event;
   const { x, width = 0 } = currentTarget.getClientRects()[0];
+  const topicTitle = event.target.getAttribute('title')
   requestAnimationFrame(() => {
     let hoverPercentage = ((mouseX - x) / width) * 100;
     videoProgressContainerTopics.style.setProperty(
       "--seek-progress",
       hoverPercentage,
     );
+    let nearestFiveMultiple = hoverPercentage -  (hoverPercentage % 5)
+    let poster = POSTERS[nearestFiveMultiple]
+    if (poster) videoProgressTopicsSeekImage.src = poster?.poster ?? ''
+    const time = (hoverPercentage * vid.duration) / 100;
+    videoProgressTopicsSeekTime.textContent = getTimeInMinAndSec(time)
+    videoProgressTopicsSeekTitle.textContent = topicTitle ?? ''
   });
 }
 
