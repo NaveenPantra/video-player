@@ -3,7 +3,6 @@
 ### This is a simple POC project for hls (HTTP Live Screaming) player
 
 ### Project setup
-
 - This project is set up with `vite`
 - Download any video
 - user `ffmpeg` to get `m3u8` for `hls`
@@ -14,3 +13,4 @@
 - Run `yarn` to install `vite` & `hls.js`
 - Now update the  `VIDEO_M3U8` in  `video.js` file to the path of your file
 - Run `yarn dev` to start the app.
+- Run `yarn build` to get production build
