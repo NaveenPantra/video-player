@@ -263,6 +263,25 @@ function buildChaptersTimeline() {
     })
 }
 
+videoProgressContainerTopics.addEventListener('mousemove', (event) => {
+    handleMouseMoveOnVideoTopicsContainer(event)
+})
+
+function handleMouseMoveOnVideoTopicsContainer(event) {
+    const {currentTarget, x: mouseX = 0} = event
+    const {x, width = 0} = currentTarget.getClientRects()[0]
+    requestAnimationFrame(() => {
+        let hoverPercentage = ((mouseX - x) / width) * 100
+        videoProgressContainerTopics.style.setProperty('--seek-progress', hoverPercentage)
+    })
+}
+
+videoProgressContainerTopics.addEventListener('mouseleave', () => {
+    requestAnimationFrame(() => {
+        videoProgressContainerTopics.style.setProperty('--seek-progress', 0)
+    })
+})
+
 videoProgressContainerTopics.addEventListener('click', (event) => {
     const {currentTarget, x: mouseX = 0} = event
     const {x, width = 0} = currentTarget.getClientRects()[0]

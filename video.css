@@ -148,6 +148,7 @@
 
 .video-progress-container-topics {
     --progress: 0;
+    --seek-progress: 0;
     cursor: pointer;
     --parent-height: 15px;
     height: var(--parent-height);
@@ -177,10 +178,12 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 0;
     height: 100%;
     background: var(--timeline-seek);
     z-index: 1;
+    min-width: 0%;
+    max-width: 100%;
+    width: calc(((var(--seek-progress) - var(--offset-progress)) / var(--share-of-total-width)) * 100%);
 }
 
 .video-topic-buffered-bar {
