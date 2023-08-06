@@ -31,6 +31,8 @@ const settings = document.getElementById('vid-settings-btn')
 const picInPic = document.getElementById('pic-in-pic-btn')
 const videoProgressNormal = document.querySelector('.video-progress-container-normal')
 const videoProgressNormalTimeline = document.querySelector('.video-progress-normal-timeline-bar')
+const videoProgressNormalNib = document.querySelector('.video-progress-normal-nib')
+const videoProgressSeekBar = document.querySelector('.video-progress-normal-seek-bar')
 
 if (Hls.isSupported()) {
     // console.log('Hls is supported!')
@@ -45,6 +47,10 @@ vid.addEventListener('loadedmetadata', () => {
     handleVideoControlsWidth()
     updateTotalDuration()
     updateCurrentTime()
+    toggleMuteIcon()
+    updatePlayPauseIcon()
+    updatePicInPicIcon()
+    updateFullscreenIcon()
 })
 
 vid.addEventListener('timeupdate', () => {
@@ -182,7 +188,9 @@ function updateProgressNormal() {
         max: vid.duration,
         val: vid.currentTime,
     })
+    const progressPercentage = scalePercentage * 100
     videoProgressNormalTimeline.style.setProperty('scale', `${scalePercentage} 1`)
+    videoProgressNormalNib.style.setProperty('left', `${progressPercentage}%`)
     if (vid.paused) {
         cancelAnimationFrame(updateProgressAnimId)
         return
@@ -195,8 +203,29 @@ videoProgressNormal.addEventListener('click', (event) => {
     const {x, width = 0} = currentTarget.getClientRects()[0]
     const clickPercentage = ((mouseX - x) / width) * 100
     vid.currentTime = (clickPercentage * vid.duration) / 100
-    requestAnimationFrame(updateProgressNormal)
+    updateProgressAnimId = requestAnimationFrame(updateProgressNormal)
 
+})
+
+videoProgressNormal.addEventListener('mousemove', (event) => {
+        handleMouseMoveOnVideoProgressNormal(event)
+})
+
+function handleMouseMoveOnVideoProgressNormal(event) {
+    const {currentTarget, x: mouseX = 0} = event
+    const {x, width = 0} = currentTarget.getClientRects()[0]
+    requestAnimationFrame(() => {
+        let hoverPercentage = ((mouseX - x) / width)
+        if (hoverPercentage < 0) hoverPercentage = 0;
+        if (hoverPercentage > 1) hoverPercentage = 1;
+        videoProgressSeekBar.style.setProperty('scale', `${hoverPercentage} 1`)
+    })
+}
+
+videoProgressNormal.addEventListener('mouseleave', () => {
+    requestAnimationFrame(() => {
+        videoProgressSeekBar.style.setProperty('scale', `0 1`)
+    })
 })
 
 window.addEventListener('resize', () => {

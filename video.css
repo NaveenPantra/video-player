@@ -15,7 +15,7 @@
 }
 
 .video-wrapper:fullscreen {
-    background: green;
+    /*background: green;*/
 }
 
 .video-wrapper:fullscreen .video-controls {
@@ -23,7 +23,7 @@
     width: 100vw !important;
     bottom: 0;
     left: 0;
-    background: white;
+    color: white;
 }
 
 .video-wrapper:fullscreen video {
@@ -39,20 +39,79 @@
 }
 
 .video-progress-container-normal {
-    height: 5px;
+    height: 15px;
     width: calc(100% - 5px);
-    background: #222;
+    /*background: #222;*/
     display: flex;
     align-self: center;
+    align-items: center;
     cursor: pointer;
+    position: relative;
+    --child-bar-height: 5px;
+}
+
+.video-progress-normal-bck {
+    background: #333;
+    width: 100%;
+    position: absolute;
+    height: var(--child-bar-height);
+    z-index: 0;
+}
+
+.video-progress-normal-buffered {
+    z-index: 1;
+    display: none;
+}
+
+.video-progress-normal-seek-bar {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    translate: 0 -50%;
+    width: 100%;
+    height: var(--child-bar-height);
+    scale: 0 1;
+    transform-origin: left;
+    background: #bbb;
+    z-index: 2;
 }
 
 .video-progress-normal-timeline-bar {
     background: #aaa;
     width: 100%;
-    height: 100%;
+    height: var(--child-bar-height);
     scale: 0 1;
     transform-origin: left;
+    z-index: 3;
+}
+
+.video-progress-normal-nib {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    translate: -50% -50%;
+    display: inline-block;
+    --w: 20px;
+    width: var(--w);
+    height: var(--w);
+    border-radius: 50%;
+    background: #aaa;
+    cursor: pointer;
+    transform-origin: center;
+    z-index: 4;
+}
+
+.video-progress-normal-nib::after {
+    content: ' ';
+    position: absolute;
+    --w: 50%;
+    width: var(--w);
+    height: var(--w);
+    border-radius: 50%;
+    background: #999;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
 }
 
 .video-control-button-wrapper {
@@ -72,6 +131,7 @@
     padding: 0;
     display: flex;
     cursor: pointer;
+    color: inherit;
 }
 
 #seek-bwd-btn {
