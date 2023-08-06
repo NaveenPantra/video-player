@@ -36,3 +36,15 @@
     - `height=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=noprint_wrappers=1:nokey=1 input.mp4)`
     - Generate and save poster at `middle_timestamp` with `width * height`
     - `ffmpeg -ss $middle_timestamp -i input.mp4 -frames:v 1 -vf "scale=${width}:${height}" poster.jpg`
+  - Poster with `5%` difference from `0%` to `95%`
+    - Get the duration `duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 input.mp4)`
+    - Get posters
+      - `interval=0
+        while [ $interval -lt 100 ]; do
+        timestamp=$(echo "scale=2; $duration * $interval / 100" | bc)
+        output_file="poster-${interval}.jpg"
+        ffmpeg -ss $timestamp -i input.mp4 -frames:v 1 -vf "scale=${width}:${height}" $output_file
+        interval=$((interval + 5))
+        done
+        `
+    
