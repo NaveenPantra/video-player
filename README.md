@@ -1,6 +1,6 @@
 # Video Player
 
-### This is a simple POC project for hls (HTTP Live Screaming) player
+## This is a simple POC project for hls (HTTP Live Screaming) player
 
 ### Project setup
 - This project is set up with `vite`
@@ -17,6 +17,7 @@
 
 
 ### ffmpeg
+- If your machine dont have `ffmpeg` install it via `brew` or any other sources.
 - To generate `m3u8`
   - Single size `ffmpeg -i input.mp4 -c:v h264 -c:a aac -hls_time 10 -hls_list_size 0 output.m3u8`
   - Multiple sizes 
@@ -47,4 +48,5 @@
         interval=$((interval + 5))
         done
         `
-    
+
+#### This project is not for live streaming purpose but to show the steaming of media file.
