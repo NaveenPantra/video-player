@@ -356,7 +356,7 @@ videoProgressContainerTopics.addEventListener("mousemove", (event) => {
 function handleMouseMoveOnVideoTopicsContainer(event) {
   const { currentTarget, x: mouseX = 0 } = event;
   const { x, width = 0 } = currentTarget.getClientRects()[0];
-  const topicTitle = event.target.getAttribute("title");
+  const topicTitle = event.target.closest?.('.video-topic-bar')?.getAttribute("title");
   requestAnimationFrame(() => {
     let hoverPercentage = ((mouseX - x) / width) * 100;
     videoProgressContainerTopics.style.setProperty(
