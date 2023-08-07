@@ -17,7 +17,7 @@
 
 
 ### ffmpeg
-- If your machine don't have `ffmpeg` install it via `brew` or any other sources.
+- If your machine don't have `ffmpeg` install it via `brew` or any other sources and `ffprobe` should come with it. If not install it.
 - To generate `m3u8`
   - Single size `ffmpeg -i input.mp4 -c:v h264 -c:a aac -hls_time 10 -hls_list_size 0 output.m3u8`
   - Multiple sizes 
