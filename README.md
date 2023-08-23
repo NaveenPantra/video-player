@@ -21,12 +21,12 @@
 - To generate `m3u8`
   - Single size `ffmpeg -i input.mp4 -c:v h264 -c:a aac -hls_time 10 -hls_list_size 0 output.m3u8`
   - Multiple sizes 
-  - `ffmpeg -i input.mp4 -c:v h264 -c:a aac \
+  - ```ffmpeg -i input.mp4 -c:v h264 -c:a aac \
     -filter_complex "[0:v]scale=1920x1080[out1];[0:v]scale=1280x720[out2];[0:v]scale=854x480[out3]" \
     -map "[out1]" -map "[out2]" -map "[out3]" \
     -var_stream_map "v:0,v:1,v:2" \
     -f hls -hls_time 10 -hls_list_size 0 output.m3u8
-    `
+    ```
 - For poster at the center of the video
   - Ge the middle timestamp
     - `duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 input.mp4)`
@@ -40,13 +40,13 @@
   - Poster with `5%` difference from `0%` to `95%`
     - Get the duration `duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 input.mp4)`
     - Get posters
-      - `interval=0
+      - ```interval=0
         while [ $interval -lt 100 ]; do
         timestamp=$(echo "scale=2; $duration * $interval / 100" | bc)
         output_file="poster-${interval}.jpg"
         ffmpeg -ss $timestamp -i input.mp4 -frames:v 1 -vf "scale=${width}:${height}" $output_file
         interval=$((interval + 5))
         done
-        `
+        ```
 
 #### This project is not for live-streaming purpose but to show the steaming of media file.
