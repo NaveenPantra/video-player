@@ -70,8 +70,8 @@
 | ![1.jpg](assets%2F1.jpg) |    ![2.jpg](assets%2F2.jpg)    | ![3.jpg](assets%2F3.jpg) |
 |:------------------------:|:------------------------------:|:------------------------:|
 | Hover on video timeline  | Hover on participants timeline |    Commenting started    |
-| ![4.jpg](assets%2F4.jpg) |    ![6.jpg](assets%2F6.jpg)    | ![5.jpg](assets%2F5.jpg) |
-|       Theater mode       |          Full screen           |    Comments layout Ex    |
+| ![4.jpg](assets%2F4.jpg) |    ![6.jpg](assets%2F6.jpg)    ||
+|       Theater mode       |          Full screen           ||
 
 
 
