@@ -49,4 +49,32 @@
         done
         ```
 
+### Features
+- This is POC done for conversation analytics for [sellular](https://sellular.com)
+- This POC also show the participants on the call and their speaking timelines and topics in the video.
+- The topics/chapters will be shown in the timeline UI of the video like [youtube](https:///youtube.com).
+- Keyboard shortcuts
+  - `k` Pause/Play
+  - `j` Skip back 10s
+  - `l` Skip forward 10s
+  - `m` Mute/Un-mute
+  - `i` Picture in Picker
+  - `t` Theater mode
+  - `f` Full screen
+  - `s` Cycle b/w playback speeds
+  - `n` Start commenting at the current time of the video _(video will pause)_
+- Once user starts commenting the keyboard shortcuts won't work until user focus on some other element.
+- User can seek through the timeline of the video from participants timeline and also from topics timeline.
+
+#### Screenshots
+| ![1.jpg](assets%2F1.jpg) |    ![2.jpg](assets%2F2.jpg)    | ![3.jpg](assets%2F3.jpg) |
+|:------------------------:|:------------------------------:|:------------------------:|
+| Hover on video timeline  | Hover on participants timeline |    Commenting started    |
+| ![4.jpg](assets%2F4.jpg) |    ![6.jpg](assets%2F6.jpg)    | ![5.jpg](assets%2F5.jpg) |
+|       Theater mode       |          Full screen           |    Comments layout Ex    |
+
+
+
+
+
 #### This project is not for live-streaming purpose but to show the steaming of media file.
