@@ -3,8 +3,8 @@
 ## This is a simple POC project for 
 1. HLS (HTTP Live Streaming) player.
 2. Youtube chapters timeline UI.
-3. Loom commentrs and jump to timestamp UI.
-4. Participants of yhe call and their speaking timeline and seek within their timeline.
+3. Loom comments and jump to timestamp of comment UI and Functionality.
+4. Participants of the call and their speaking timeline and seek within their timeline.
 5. Topics of video interaction like gong.
 
 ### Project setup
