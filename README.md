@@ -1,5 +1,7 @@
 # Video Player
 
+## Video: https://youtu.be/E5ve4zrTrm0
+
 ## This is a simple POC project for 
 1. HLS (HTTP Live Streaming) player.
 2. Youtube chapters timeline UI.
